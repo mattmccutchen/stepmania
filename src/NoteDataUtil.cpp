@@ -70,19 +70,22 @@ static void LoadFromSMNoteDataStringWithPlayer( NoteData& out, const RString &sS
 		 * would do as I would expect. */
 		split( sSMNoteData, ",", start, size, end, true ); // Ignore empty is important.
 		if( start == end )
+		{
 			break;
-
+		}
 		// Partial string split.
 		int measureLineStart = start, measureLineSize = -1;
 		const int measureEnd = start + size;
 
 		aMeasureLines.clear();
-		while( true )
+		for(;;)
 		{
 			// Ignore empty is clearly important here.
 			split( sSMNoteData, "\n", measureLineStart, measureLineSize, measureEnd, true );
 			if( measureLineStart == measureEnd )
+			{
 				break;
+			}
 			//RString &line = sSMNoteData.substr( measureLineStart, measureLineSize );
 			const char *beginLine = sSMNoteData.data() + measureLineStart;
 			const char *endLine = beginLine + measureLineSize;
@@ -706,11 +709,13 @@ void LightTransformHelper( const NoteData &in, NoteData &out, const vector<int> 
 		 * until we've extended to the end of the latest overlapping hold note. */
 		int iHoldStart = r;
 		int iHoldEnd = -1;
-		while(1)
+		for(;;)
 		{
 			int iMaxTailRow = FindLongestOverlappingHoldNoteForAnyTrack( in, r );
 			if( iMaxTailRow == -1 )
+			{
 				break;
+			}
 			iHoldEnd = iMaxTailRow;
 			r = iMaxTailRow;
 		}
@@ -932,6 +937,8 @@ void NoteDataUtil::AutogenKickbox(const NoteData& in, NoteData& out, const Timin
 					this_limb= prev_limb_used == left_fist ? right_fist : left_fist;
 				}
 				break;
+			default:
+				break;
 		}
 		size_t this_panel= prev_limb_panels[this_limb];
 		if(panel_repeat_counts[this_limb] + 1 > panel_repeat_goals[this_limb])
@@ -1116,6 +1123,8 @@ void NoteDataUtil::CalculateRadarValues( const NoteData &in, float fSongSeconds,
 					break;
 				case TapNoteType_Fake:
 					++out[RadarCategory_Fakes];
+					break;
+				default:
 					break;
 			}
 		}

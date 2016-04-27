@@ -174,21 +174,28 @@ int MovieDecoder_FFMpeg::DecodeFrame( float fTargetTime )
 		m_fLastFrame=fTargetTime;
 	}
 
-	while( 1 )
+	for(;;)
 	{
 		int ret = DecodePacket( fTargetTime );
 
 		if( ret == 1 )
+		{
 			return 1;
+		}
 		if( ret == -1 )
+		{
 			return -1;
+		}
 		if( ret == 0 && m_iEOF > 0 )
+		{
 			return 0; /* eof */
-
+		}
 		ASSERT( ret == 0 );
 		ret = ReadPacket();
 		if( ret < 0 )
+		{
 			return ret; /* error */
+		}
 	}
 }
 
@@ -365,7 +372,7 @@ static RString averr_ssprintf( int err, const char *fmt, ... )
 	char* errbuf = new char[errbuf_size];
 	avcodec::av_strerror(err, errbuf, errbuf_size);
 	RString Error = ssprintf("%i: %s", err, errbuf);
-	delete errbuf;
+	delete[] errbuf;
 
 	return s + " (" + Error + ")";
 }
