@@ -116,7 +116,7 @@ bool NoteSkinManager::LoadNoteSkinDataRecursive( const RString &sNoteSkinName_, 
 	int iDepth = 0;
 	bool bLoadedCommon = false;
 	bool bLoadedBase = false;
-	while(1)
+	for(;;)
 	{
 		++iDepth;
 		if(iDepth >= 20)
@@ -397,6 +397,8 @@ RString NoteSkinManager::GetPath( const RString &sButtonName, const RString &sEl
 				RageException::Throw("%s", message.c_str());
 			case Dialog::ignore:
 				return "";
+			default:
+				break;
 		}
 	}
 
@@ -439,6 +441,8 @@ RString NoteSkinManager::GetPath( const RString &sButtonName, const RString &sEl
 					RageException::Throw("%s", message.c_str());
 				case Dialog::ignore:
 					return "";
+				default:
+					break;
 			}
 		}
 		
@@ -483,6 +487,7 @@ Actor *NoteSkinManager::LoadActor( const RString &sButton, const RString &sEleme
 
 	if( !PushActorTemplate(L, sButton, sElement, bSpriteOnly) )
 	{
+		LUA->Release( L );
 		// ActorUtil will warn about the error
 		return Sprite::NewBlankSprite();
 	}
@@ -490,6 +495,7 @@ Actor *NoteSkinManager::LoadActor( const RString &sButton, const RString &sEleme
 	auto_ptr<XNode> pNode( XmlFileUtil::XNodeFromTable(L) );
 	if( pNode.get() == NULL )
 	{
+		LUA->Release( L );
 		// XNode will warn about the error
 		return Sprite::NewBlankSprite();
 	}

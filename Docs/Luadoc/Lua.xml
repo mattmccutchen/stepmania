@@ -191,7 +191,6 @@
 		<Function name='Trace'/>
 		<Function name='TrailToCustomDifficulty'/>
 		<Function name='URLEncode'/>
-		<Function name='UndocumentedFeature'/>
 		<Function name='UnlockRewardTypeToLocalizedString'/>
 		<Function name='update_centering'/>
 		<Function name='Var'/>
@@ -386,6 +385,7 @@
 			<Function name='getaux'/>
 			<Function name='geteffectmagnitude'/>
 			<Function name='getrotation'/>
+			<Function name='get_tween_uses_effect_delta'/>
 			<Function name='glow'/>
 			<Function name='glowblink'/>
 			<Function name='glowramp'/>
@@ -418,6 +418,7 @@
 			<Function name='scaletofit'/>
 			<Function name='setsize'/>
 			<Function name='setstate'/>
+			<Function name='set_tween_uses_effect_delta'/>
 			<Function name='shadowcolor'/>
 			<Function name='shadowlength'/>
 			<Function name='shadowlengthx'/>

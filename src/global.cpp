@@ -30,7 +30,7 @@ void NORETURN sm_crash( const char *reason )
 
 
 		DebugBreak();
-		while(1); /* don't return */
+		for(;;); /* don't return */
 	}
 #endif
 
@@ -41,7 +41,7 @@ void NORETURN sm_crash( const char *reason )
 
 	/* This isn't actually reached.  We just do this to convince the compiler that the
 	 * function really doesn't return. */
-	while(1);
+	for(;;);
 #endif
 
 #if defined(_WINDOWS)

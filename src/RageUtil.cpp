@@ -881,7 +881,7 @@ void split( const wstring &sSource, const wstring &sDelimitor, vector<wstring> &
 
 RString str="a,b,c";
 int start = 0, size = -1;
-while( 1 )
+for(;;)
 {
 	do_split( str, ",", start, size );
 	if( start == str.size() )
@@ -2379,24 +2379,30 @@ bool FileCopy( const RString &sSrcFile, const RString &sDstFile )
 
 bool FileCopy( RageFileBasic &in, RageFileBasic &out, RString &sError, bool *bReadError )
 {
-	while(1)
+	for(;;)
 	{
 		RString data;
 		if( in.Read(data, 1024*32) == -1 )
 		{
 			sError = ssprintf( "read error: %s", in.GetError().c_str() );
 			if( bReadError != NULL )
+			{
 				*bReadError = true;
+			}
 			return false;
 		}
 		if( data.empty() )
+		{
 			break;
+		}
 		int i = out.Write(data);
 		if( i == -1 )
 		{
 			sError = ssprintf( "write error: %s", out.GetError().c_str() );
 			if( bReadError != NULL )
+			{
 				*bReadError = false;
+			}
 			return false;
 		}
 	}
@@ -2405,7 +2411,9 @@ bool FileCopy( RageFileBasic &in, RageFileBasic &out, RString &sError, bool *bRe
 	{
 		sError = ssprintf( "write error: %s", out.GetError().c_str() );
 		if( bReadError != NULL )
+		{
 			*bReadError = false;
+		}
 		return false;
 	}
 
@@ -2428,8 +2436,6 @@ LuaFunction( mbstrlen, (int)RStringToWstring(SArg(1)).length() )
 LuaFunction( URLEncode, URLEncode( SArg(1) ) );
 LuaFunction( PrettyPercent, PrettyPercent( FArg(1), FArg(2) ) );
 //LuaFunction( IsHexVal, IsHexVal( SArg(1) ) );
-static bool UndocumentedFeature( RString s ){ sm_crash(s); return true; }
-LuaFunction( UndocumentedFeature, UndocumentedFeature(SArg(1)) );
 LuaFunction( lerp, lerp(FArg(1), FArg(2), FArg(3)) );
 
 int LuaFunc_commify(lua_State* L);
