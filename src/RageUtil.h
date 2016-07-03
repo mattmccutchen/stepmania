@@ -529,7 +529,9 @@ float calc_stddev( const float *pStart, const float *pEnd, bool bSample = false 
 
 /* 
  * Find the slope, intercept, and error of a linear least squares regression 
- * of the points given.  Error is returned as the sqrt of the average squared
+ * of the points given.  Error is returned as the sqrt of the ave
+
+ squared
  * Y distance from the chosen line. 
  * Returns true on success, false on failure. 
  */
