@@ -373,6 +373,8 @@ function ArbitrarySpeedMods()
 				list[1]= true
 			else
 				list[2]= true
+                list[3]= true
+                list[4]= true
 			end
 		end,
 		SaveSelections= function(self, list, pn)
@@ -442,7 +444,7 @@ function ArbitrarySpeedMods()
 				"+" .. big_inc, "+" .. small_inc, "-" .. small_inc, "-" .. big_inc,
 				"Xmod", "Cmod", "Mmod"}
 			-- Insert the status element for P2 first so it will be second
-			for i, pn in ipairs({PLAYER_2, PLAYER_1}) do
+			for i, pn in ipairs({PLAYER_4, PLAYER_3, PLAYER_2, PLAYER_1}) do
 				local val= self.CurValues[pn]
 				if val then
 					if val.mode == "x" then
