@@ -65,6 +65,7 @@ bool RageFile::Open( const RString& path, int mode )
 	}
 
 	int error;
+
 	m_File = FILEMAN->Open( path, mode, error );
 
 	if( m_File == NULL )
