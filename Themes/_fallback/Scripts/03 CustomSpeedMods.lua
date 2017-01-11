@@ -358,26 +358,29 @@ function GetSpeedModeAndValueFromPoptions(pn)
 	return speed, mode
 end
 
-function ArbitrarySpeedMods()
+function ArbitrarySpeedMods(lpn)
 	-- If players are allowed to join while this option row is active, problems will probably occur.
 	local increment= get_speed_increment()
 	local inc_large= get_speed_inc_large()
 	local ret= {
-		Name= "Speed",
+		ForPlayer= lpn,
+		Name= string.format("Speed (P%d)", PlayerNumberToNumber[lpn]),
 		LayoutType= "ShowAllInRow",
 		SelectType= "SelectMultiple",
 		OneChoiceForAllPlayers= false,
+		EnabledForPlayers= function(self)
+			return {self.ForPlayer}
+		end,
 		LoadSelections= function(self, list, pn)
 			-- The first values display the current status of the speed mod.
-			if pn == PLAYER_1 or self.NumPlayers == 1 then
+			if pn == self.ForPlayer then
 				list[1]= true
-			else
-				list[2]= true
-                list[3]= true
-                list[4]= true
 			end
 		end,
 		SaveSelections= function(self, list, pn)
+			if not pn == self.ForPlayer then
+				return
+			end
 			local val= self.CurValues[pn]
 			local poptions= GAMESTATE:GetPlayerState(pn):GetPlayerOptions("ModsLevel_Preferred")
 			-- modify stage, song and current too so this will work in edit mode.
@@ -423,6 +426,10 @@ function ArbitrarySpeedMods()
 			return true
 		end,
 		GenChoices= function(self)
+			if self.NumPlayers == 0 then
+				self.Choices = {"Not applicable"}
+				return
+			end
 			-- We can't show different options to each player, so compromise by
 			-- only showing the xmod increments if one player is in that mode.
 			local show_x_incs= false
@@ -443,8 +450,7 @@ function ArbitrarySpeedMods()
 			self.Choices= {
 				"+" .. big_inc, "+" .. small_inc, "-" .. small_inc, "-" .. big_inc,
 				"Xmod", "Cmod", "Mmod"}
-			-- Insert the status element for P2 first so it will be second
-			for i, pn in ipairs({PLAYER_4, PLAYER_3, PLAYER_2, PLAYER_1}) do
+			for i, pn in ipairs({self.ForPlayer}) do
 				local val= self.CurValues[pn]
 				if val then
 					if val.mode == "x" then
@@ -459,7 +465,7 @@ function ArbitrarySpeedMods()
 		NumPlayers= 0 -- for ease when adjusting for the status elements.
 	}
 	for i, pn in ipairs(GAMESTATE:GetEnabledPlayers()) do
-		if GAMESTATE:IsHumanPlayer(pn) then
+		if GAMESTATE:IsHumanPlayer(pn) and pn == lpn then
 			local speed, mode= GetSpeedModeAndValueFromPoptions(pn)
 			ret.CurValues[pn]= {mode= mode, speed= speed}
 			ret.NumPlayers= ret.NumPlayers + 1

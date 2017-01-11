@@ -24,6 +24,8 @@ PLAYER_3 = "PlayerNumber_P3"
 PLAYER_4 = "PlayerNumber_P4"
 NUM_PLAYERS = #PlayerNumber
 OtherPlayer = { [PLAYER_1] = PLAYER_2, [PLAYER_2] = PLAYER_1 }
+-- Better ideas? ~ Matt 2017-01-11
+PlayerNumberToNumber = { [PLAYER_1] = 1, [PLAYER_2] = 2, [PLAYER_3] = 3, [PLAYER_4] = 4 }
 
 function string:find_last(text)
 	local LastPos = 0
