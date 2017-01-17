@@ -378,7 +378,7 @@ function ArbitrarySpeedMods(lpn)
 			end
 		end,
 		SaveSelections= function(self, list, pn)
-			if not pn == self.ForPlayer then
+			if pn ~= self.ForPlayer then
 				return
 			end
 			local val= self.CurValues[pn]
