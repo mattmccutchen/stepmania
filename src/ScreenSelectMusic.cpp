@@ -527,7 +527,14 @@ bool ScreenSelectMusic::Input( const InputEventPlus &input )
 	// Handle late joining
 	// If the other player is allowed to join on the extra stage, then the
 	// summary screen will crash on invalid stage stats. -Kyz
-	if(m_SelectionState != SelectionState_Finalized &&
+	//
+	// Joining of players 3 and 4 currently doesn't work, apparently because
+	// GameState::JoinPlayer doesn't find a 3-player style.  For now, exclude
+	// them from this case rather than trying to fix the underlying problem,
+	// which might break other things.
+	// ~ Matt 2017-01-17
+	if((input.pn == PLAYER_1 || input.pn == PLAYER_2) &&
+		m_SelectionState != SelectionState_Finalized &&
 		input.MenuI == GAME_BUTTON_START && input.type == IET_FIRST_PRESS &&
 		!GAMESTATE->IsAnExtraStage() && GAMESTATE->JoinInput(input.pn))
 	{
