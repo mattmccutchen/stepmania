@@ -171,16 +171,18 @@ for pn, p in ipairs(GAMESTATE:GetHumanPlayers()) do
             CodeMessageCommand=function(self, param)
                 if param.PlayerNumber == p then
                     if param.Name=="PreviousScrollSpeed" or param.Name=="NextScrollSpeed" then
-                        local pSpeed = GetSpeedModName(p)
-                        if not has_value(speeds, pSpeed) then
-                            pSpeed = speeds[1]
-                        end
+                        -- The SetPlayerOptions is clobbering all other player options.
+                        -- Disable this functionality. ~ Matt 2017-01-22
+                        --local pSpeed = GetSpeedModName(p)
+                        --if not has_value(speeds, pSpeed) then
+                        --    pSpeed = speeds[1]
+                        --end
                         
-                        if param.Name=="PreviousScrollSpeed" then
-                            GAMESTATE:GetPlayerState(p):SetPlayerOptions("ModsLevel_Preferred", prevSpeeds[pSpeed])
-                        elseif param.Name=="NextScrollSpeed" then
-                            GAMESTATE:GetPlayerState(p):SetPlayerOptions("ModsLevel_Preferred", nextSpeeds[pSpeed])
-                        end
+                        --if param.Name=="PreviousScrollSpeed" then
+                        --    GAMESTATE:GetPlayerState(p):SetPlayerOptions("ModsLevel_Preferred", prevSpeeds[pSpeed])
+                        --elseif param.Name=="NextScrollSpeed" then
+                        --    GAMESTATE:GetPlayerState(p):SetPlayerOptions("ModsLevel_Preferred", nextSpeeds[pSpeed])
+                        --end
                         
                         self:queuecommand("UpdateSpeed")
                     end
