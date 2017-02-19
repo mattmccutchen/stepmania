@@ -934,9 +934,8 @@ void BrightnessOverlay::Update( float fDeltaTime )
 
 void BrightnessOverlay::SetActualBrightness()
 {
-	float fixedCover = 0.8;
-	float fLeftBrightness = 1- fixedCover /*GAMESTATE->m_pPlayerState[PLAYER_1]->m_PlayerOptions.GetCurrent().m_fCover*/;
-	float fRightBrightness = 1- fixedCover /*GAMESTATE->m_pPlayerState[PLAYER_2]->m_PlayerOptions.GetCurrent().m_fCover*/;
+	float fLeftBrightness = 1-GAMESTATE->m_pPlayerState[PLAYER_1]->m_PlayerOptions.GetCurrent().m_fCover;
+	float fRightBrightness = 1-GAMESTATE->m_pPlayerState[PLAYER_2]->m_PlayerOptions.GetCurrent().m_fCover;
 
 	float fBaseBGBrightness = g_fBGBrightness;
 
