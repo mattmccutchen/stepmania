@@ -358,6 +358,30 @@ function GetSpeedModeAndValueFromPoptions(pn)
 	return speed, mode
 end
 
+function GetSpeedPreview(xval)
+	-- Based on:
+	-- https://github.com/dguzek/Simply-Love-SM5/blob/88e58608b6e48f6f5f855d020afd616845f8a84b/BGAnimations/ScreenPlayerOptions%20overlay.lua#L6
+	-- with unspecified license by Matt McCutchen.  We won't support course mode
+	-- and won't take into account music rate.
+	local song = GAMESTATE:GetCurrentSong()
+	if song then
+		local bpm = song:GetDisplayBpms()
+		-- handle DisplayBPMs that are <= 0
+		if bpm[1] <= 0 or bpm[2] <= 0 then
+			bpm = song:GetTimingData():GetActualBPM()
+		end
+		--if a single bpm suffices
+		if bpm[1] == bpm[2] then
+			return " (" .. round(xval * bpm[1]) .. ")"
+		-- if we have a range of bpms
+		else
+			return " (" .. round(xval * bpm[1]) .. "-" .. round(xval * bpm[2]) .. ")"
+		end
+	else
+		return ""
+	end
+end
+
 function ArbitrarySpeedMods(lpn)
 	-- If players are allowed to join while this option row is active, problems will probably occur.
 	local increment= get_speed_increment()
@@ -454,7 +478,7 @@ function ArbitrarySpeedMods(lpn)
 				local val= self.CurValues[pn]
 				if val then
 					if val.mode == "x" then
-						table.insert(self.Choices, 1, (val.speed/100) .. "x")
+						table.insert(self.Choices, 1, (val.speed/100) .. "x" .. GetSpeedPreview(val.speed/100))
 					else
 						table.insert(self.Choices, 1, val.mode .. val.speed)
 					end
