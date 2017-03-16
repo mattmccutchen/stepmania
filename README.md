@@ -1,3 +1,7 @@
+Matt McCutchen's StepMania-Event
+=========
+[This](https://github.com/mattmccutchen/stepmania/tree/matt-events) is a modified version of [Highlogic StepMania-Event](https://github.com/Highlogic/stepmania-event/) that I use for 4-player events that I host.  I maintain it for my own purposes and make no promise to follow good development practices or anything like that.
+
 Stepmania-Event (4P)
 =========
 This is a fork of the software mentioned beneath here,
